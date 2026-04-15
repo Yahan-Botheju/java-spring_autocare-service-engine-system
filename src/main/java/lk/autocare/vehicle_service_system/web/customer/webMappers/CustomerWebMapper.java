@@ -15,7 +15,6 @@ import org.mapstruct.Mapping;
 public interface CustomerWebMapper {
 
     //RequestDTO to domain model
-    @Mapping(target = "customerId", source = "customerId")
     Customer toDomainModel(CustomerRequestDTO customerRequestDTO);
 
     //domain model to ResponseDTO
