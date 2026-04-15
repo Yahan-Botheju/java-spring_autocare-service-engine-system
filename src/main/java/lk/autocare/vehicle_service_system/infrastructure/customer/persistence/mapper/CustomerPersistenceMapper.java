@@ -3,7 +3,6 @@ package lk.autocare.vehicle_service_system.infrastructure.customer.persistence.m
 import lk.autocare.vehicle_service_system.domain.models.Customer;
 import lk.autocare.vehicle_service_system.infrastructure.customer.persistence.entity.CustomerEntity;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.NullValueCheckStrategy;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
@@ -16,6 +15,5 @@ public interface CustomerPersistenceMapper {
     Customer toDomainModel(CustomerEntity customerEntity);
 
     //domain model to entity
-    @Mapping(target = "customerId", source = "customerId")
     CustomerEntity toEntity(Customer customer);
 }
