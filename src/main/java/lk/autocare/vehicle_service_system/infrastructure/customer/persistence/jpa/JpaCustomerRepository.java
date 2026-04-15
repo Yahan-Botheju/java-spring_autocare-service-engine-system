@@ -1,4 +1,7 @@
 package lk.autocare.vehicle_service_system.infrastructure.customer.persistence.jpa;
 
-public interface JpaCustomerRepository {
+import lk.autocare.vehicle_service_system.infrastructure.customer.persistence.entity.CustomerEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface JpaCustomerRepository extends JpaRepository<CustomerEntity, Long> {
 }
