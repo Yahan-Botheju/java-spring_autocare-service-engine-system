@@ -8,4 +8,7 @@ public interface CustomerRepository {
 
     //get all customers
     List<Customer> getAllCustomers();
+
+    //save new customer
+    void saveCustomer(Customer customer);
 }
