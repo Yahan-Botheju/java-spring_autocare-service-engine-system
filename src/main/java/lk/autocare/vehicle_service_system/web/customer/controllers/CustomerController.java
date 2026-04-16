@@ -2,12 +2,13 @@ package lk.autocare.vehicle_service_system.web.customer.controllers;
 
 import lk.autocare.vehicle_service_system.domain.models.Customer;
 import lk.autocare.vehicle_service_system.usecase.customer.CustomerUseCase;
+import lk.autocare.vehicle_service_system.web.customer.DTOs.CustomerRequestDTO;
 import lk.autocare.vehicle_service_system.web.customer.DTOs.CustomerResponseDTO;
 import lk.autocare.vehicle_service_system.web.customer.webMappers.CustomerWebMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,4 +29,17 @@ public class CustomerController {
         
         return customerList.stream().map(e -> customerWebMapper.toResponseDTO(e)).toList();
     }
+
+    //save new customer
+    @PatchMapping("/register")
+    public ResponseEntity<String> saveCustomer(
+            @RequestBody CustomerRequestDTO customerRequestDTO
+    ){
+        //turn requestDTO to domain model
+        Customer toDomainModel = customerWebMapper.toDomainModel(customerRequestDTO);
+        //set model to usecase
+        customerUseCase.saveCustomer(toDomainModel);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body("Customer registered successfully");
+    };
 }
