@@ -23,4 +23,10 @@ public class CustomerUseCaseImpl implements  CustomerUseCase {
     public void saveCustomer(Customer customer){
         customerRepository.saveCustomer(customer);
     }
+
+    //update customer
+    @Override
+    public void updateCustomer(Long customerId, Customer customer){
+        customerRepository.updateCustomer(customerId,customer);
+    }
 }
