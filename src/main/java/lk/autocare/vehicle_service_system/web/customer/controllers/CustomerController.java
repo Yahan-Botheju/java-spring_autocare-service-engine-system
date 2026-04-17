@@ -57,4 +57,15 @@ public class CustomerController {
 
        return ResponseEntity.status(HttpStatus.CREATED).body("Customer updated successfully");
     }
+
+    //delete customer
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteCustomer(
+            @RequestParam Long customerId
+    ){
+        //directly set value to usecase
+        customerUseCase.deleteCustomer(customerId);
+
+        return ResponseEntity.status(HttpStatus.OK).body("Customer deleted successfully");
+    }
 }
