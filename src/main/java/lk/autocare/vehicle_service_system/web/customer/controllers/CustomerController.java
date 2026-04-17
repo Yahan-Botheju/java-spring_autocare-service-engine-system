@@ -27,7 +27,7 @@ public class CustomerController {
     public List<CustomerResponseDTO> getAllCustomers(){
         List<Customer> customerList = customerUseCase.getAllCustomers();
         
-        return customerList.stream().map(e -> customerWebMapper.toResponseDTO(e)).toList();
+        return customerList.stream().map(customer -> customerWebMapper.toResponseDTO(customer)).toList();
     }
 
     //save new customer
@@ -42,4 +42,19 @@ public class CustomerController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body("Customer registered successfully");
     };
+
+    //update customer
+    @PutMapping("/{id}")
+    public ResponseEntity<String> updateCustomer(
+            @RequestParam Long customerId,
+            @RequestBody CustomerRequestDTO customerRequestDTO
+    ){
+        //turn request dto to domain model
+        Customer toDomainModel = customerWebMapper.toDomainModel(customerRequestDTO);
+
+        //set values to usecase
+       customerUseCase.updateCustomer(customerId, toDomainModel);
+
+       return ResponseEntity.status(HttpStatus.CREATED).body("Customer updated successfully");
+    }
 }
