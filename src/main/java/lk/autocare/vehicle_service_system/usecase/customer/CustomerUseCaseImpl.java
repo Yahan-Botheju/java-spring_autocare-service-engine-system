@@ -3,8 +3,10 @@ package lk.autocare.vehicle_service_system.usecase.customer;
 import lk.autocare.vehicle_service_system.domain.models.Customer;
 import lk.autocare.vehicle_service_system.domain.repositories.CustomerRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class CustomerUseCaseImpl implements  CustomerUseCase {
@@ -27,6 +29,11 @@ public class CustomerUseCaseImpl implements  CustomerUseCase {
     //update customer
     @Override
     public void updateCustomer(Long customerId, Customer customer){
+
+        //check customer availability then throw error to exception handler
+        customerRepository.findById(customerId)
+                .orElseThrow(() -> new ResourceNotFoundException("Customer not found" + " " + customerId));
+        //customer found then save in db
         customerRepository.updateCustomer(customerId,customer);
     }
 
