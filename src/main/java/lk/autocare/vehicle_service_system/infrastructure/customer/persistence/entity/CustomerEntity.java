@@ -7,11 +7,13 @@ import lk.autocare.vehicle_service_system.infrastructure.vehicle.persistence.ent
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SoftDelete;
 
 import java.util.List;
 
 @Entity
 @Table(name = "customers")
+@SoftDelete(columnName = "is_deleted")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
