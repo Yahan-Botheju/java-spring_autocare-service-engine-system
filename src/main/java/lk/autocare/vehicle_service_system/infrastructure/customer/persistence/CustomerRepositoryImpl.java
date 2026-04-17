@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @AllArgsConstructor
@@ -40,8 +41,9 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     //update customer
     @Override
     public void updateCustomer(Long customerId, Customer customer){
+        //check customer by id
         CustomerEntity currentEntity = jpaCustomerRepository.findById(customerId)
-                .orElseThrow(() -> new RuntimeException("Invalid customer id"));
+                .orElseThrow(() -> new RuntimeException("Invalid Customer Id" + " " +customerId));
 
         //use just updated fields only method
        CustomerEntity updatedEntity =  customerPersistenceMapper
@@ -59,5 +61,12 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         }
         //then delete customer
         jpaCustomerRepository.deleteById(customerId);
+    }
+
+    //find customer by id, turn into domain model
+    @Override
+    public Optional<Customer> findById(Long customerId){
+        return jpaCustomerRepository.findById(customerId)
+                .map(customer -> customerPersistenceMapper.toDomainModel(customer));
     }
 }
