@@ -36,4 +36,17 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         //save in db
         jpaCustomerRepository.save(entity);
     }
+
+    //update customer
+    @Override
+    public void updateCustomer(Long customerId, Customer customer){
+        CustomerEntity currentEntity = jpaCustomerRepository.findById(customerId)
+                .orElseThrow(() -> new RuntimeException("Invalid customer id"));
+
+        //use just updated fields only method
+       CustomerEntity updatedEntity =  customerPersistenceMapper
+               .updateEntityWithNewDomainModel(customer, currentEntity);
+       //save in db
+       jpaCustomerRepository.save(updatedEntity);
+    }
 }
