@@ -5,6 +5,7 @@ import lk.autocare.vehicle_service_system.domain.repositories.CustomerRepository
 import lk.autocare.vehicle_service_system.infrastructure.customer.persistence.entity.CustomerEntity;
 import lk.autocare.vehicle_service_system.infrastructure.customer.persistence.jpa.JpaCustomerRepository;
 import lk.autocare.vehicle_service_system.infrastructure.customer.persistence.mapper.CustomerPersistenceMapper;
+import lk.autocare.vehicle_service_system.web.customer.exception.ResourceNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -43,7 +44,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     public void updateCustomer(Long customerId, Customer customer){
         //check customer by id
         CustomerEntity currentEntity = jpaCustomerRepository.findById(customerId)
-                .orElseThrow(() -> new RuntimeException("Invalid Customer Id" + " " +customerId));
+                .orElseThrow(() -> new ResourceNotFoundException("Invalid Customer Id" + " " +customerId));
 
         //use just updated fields only method
        CustomerEntity updatedEntity =  customerPersistenceMapper
@@ -57,7 +58,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     public void deleteCustomer(Long customerId){
         //check customer availability
         if(!jpaCustomerRepository.existsById(customerId)){
-            throw new RuntimeException("Invalid customer id");
+            throw new ResourceNotFoundException("Invalid customer id" + " " + customerId);
         }
         //then delete customer
         jpaCustomerRepository.deleteById(customerId);

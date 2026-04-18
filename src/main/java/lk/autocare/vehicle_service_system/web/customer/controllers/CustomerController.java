@@ -41,10 +41,10 @@ public class CustomerController {
         customerUseCase.saveCustomer(toDomainModel);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("Customer registered successfully");
-    };
+    }
 
     //update customer
-    @PutMapping("/{id}")
+    @PutMapping("/{customerId}")
     public ResponseEntity<String> updateCustomer(
             @RequestParam Long customerId,
             @RequestBody CustomerRequestDTO customerRequestDTO
@@ -59,7 +59,7 @@ public class CustomerController {
     }
 
     //delete customer
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{customerId}")
     public ResponseEntity<String> deleteCustomer(
             @RequestParam Long customerId
     ){
