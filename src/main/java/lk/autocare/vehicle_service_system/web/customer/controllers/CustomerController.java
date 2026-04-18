@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/autocare/")
+@RequestMapping("/api/v1/autocare/customer")
 @RequiredArgsConstructor
 public class CustomerController {
 
@@ -46,7 +46,7 @@ public class CustomerController {
     //update customer
     @PutMapping("/{customerId}")
     public ResponseEntity<String> updateCustomer(
-            @RequestParam Long customerId,
+            @PathVariable Long customerId,
             @RequestBody CustomerRequestDTO customerRequestDTO
     ){
         //turn request dto to domain model
@@ -61,7 +61,7 @@ public class CustomerController {
     //delete customer
     @DeleteMapping("/{customerId}")
     public ResponseEntity<String> deleteCustomer(
-            @RequestParam Long customerId
+            @PathVariable Long customerId
     ){
         //directly set value to usecase
         customerUseCase.deleteCustomer(customerId);
