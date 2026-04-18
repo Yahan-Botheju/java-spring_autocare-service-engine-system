@@ -5,7 +5,7 @@ import lk.autocare.vehicle_service_system.domain.repositories.CustomerRepository
 import lk.autocare.vehicle_service_system.infrastructure.customer.persistence.entity.CustomerEntity;
 import lk.autocare.vehicle_service_system.infrastructure.customer.persistence.jpa.JpaCustomerRepository;
 import lk.autocare.vehicle_service_system.infrastructure.customer.persistence.mapper.CustomerPersistenceMapper;
-import lk.autocare.vehicle_service_system.web.customer.exception.ResourceNotFoundException;
+import lk.autocare.vehicle_service_system.GlobalExceptionHandler.ResourceNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
