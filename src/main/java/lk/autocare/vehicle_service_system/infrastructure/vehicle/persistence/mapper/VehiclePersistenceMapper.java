@@ -4,8 +4,12 @@ import lk.autocare.vehicle_service_system.domain.models.Vehicle;
 import lk.autocare.vehicle_service_system.infrastructure.vehicle.persistence.entity.VehicleEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValueCheckStrategy;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring",
+        nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface VehiclePersistenceMapper {
 
     //domain model to entity
