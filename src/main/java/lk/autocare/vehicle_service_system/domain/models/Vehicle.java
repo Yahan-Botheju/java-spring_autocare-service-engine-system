@@ -19,6 +19,11 @@ public class Vehicle {
     private LocalDate lastServiceDate;
     private LocalDate nextServiceDate;
     private int mileage;
+
+    //add customer id fields, get value to mapper
+    private Long customerId;
+
     //customer object
-//    private Customer customer;
+    //private Customer customer;
+
 }

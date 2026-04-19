@@ -7,6 +7,8 @@ import lk.autocare.vehicle_service_system.infrastructure.vehicle.persistence.map
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -23,5 +25,12 @@ public class VehicleRepositoryImpl implements  VehicleRepository {
     public Optional<Vehicle> findById(Long vehicleId){
         return jpaVehicleRepository.findById(vehicleId)
                 .map(vehicle -> vehiclePersistenceMapper.toDomainModel(vehicle));
+    }
+
+    //get all vehicle
+    public List<Vehicle> getAllVehicles(){
+        //find all vehicles from db then attached to list and return
+        return jpaVehicleRepository.findAll().stream()
+                .map(vehicle -> vehiclePersistenceMapper.toDomainModel(vehicle)).toList();
     }
 }

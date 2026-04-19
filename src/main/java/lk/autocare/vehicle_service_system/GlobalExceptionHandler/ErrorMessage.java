@@ -1,4 +1,4 @@
-package lk.autocare.vehicle_service_system.web.customer.exception;
+package lk.autocare.vehicle_service_system.GlobalExceptionHandler;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

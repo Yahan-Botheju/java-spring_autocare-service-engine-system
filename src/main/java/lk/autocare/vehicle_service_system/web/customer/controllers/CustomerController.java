@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/autocare/customer")
+@RequestMapping("/api/v1/autocare/customers")
 @RequiredArgsConstructor
 public class CustomerController {
 
@@ -23,6 +23,7 @@ public class CustomerController {
     //inject web mapper
     private final CustomerWebMapper customerWebMapper;
 
+    //get all customers
     @GetMapping("/all")
     public List<CustomerResponseDTO> getAllCustomers(){
         List<Customer> customerList = customerUseCase.getAllCustomers();
