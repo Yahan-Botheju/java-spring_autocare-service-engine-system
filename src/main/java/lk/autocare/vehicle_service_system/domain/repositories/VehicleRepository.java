@@ -12,4 +12,7 @@ public interface VehicleRepository {
 
     //get all vehicle
     List<Vehicle> getAllVehicles();
+
+    //create vehicle
+    Vehicle saveVehicle(Vehicle vehicle);
 }
