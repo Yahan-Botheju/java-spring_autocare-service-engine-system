@@ -19,4 +19,5 @@ public class VehicleResponseDTO {
     private LocalDate nextServiceDate;
     private int mileage;
     private Long customerId;
+    private String customerName;
 }
