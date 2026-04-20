@@ -46,4 +46,20 @@ public class VehicleController {
         return  ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    //update vehicle details
+    @PutMapping("/{vehicleId}")
+    public ResponseEntity<VehicleResponseDTO> updateVehicle(
+            @PathVariable Long vehicleId,
+            @RequestBody VehicleRequestDTO vehicleRequestDTO
+    ){
+        //turn to domain model
+        Vehicle vehicleDomainModel = vehicleWebMapper.toDomainModel(vehicleRequestDTO);
+
+        //set values to usecase for update
+        VehicleResponseDTO toResponse = vehicleUseCase.updateVehicle(vehicleId, vehicleDomainModel);
+
+        //return response with updated values
+        return ResponseEntity.status(HttpStatus.CREATED).body(toResponse);
+    }
+
 }
