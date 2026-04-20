@@ -8,7 +8,7 @@ import java.util.List;
 public interface VehicleUseCase {
 
     //get all vehicle
-    List<Vehicle> getAllVehicles();
+    List<VehicleResponseDTO> getAllVehicles();
 
     //create vehicle
     VehicleResponseDTO saveVehicle(Vehicle vehicle);
