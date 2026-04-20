@@ -60,4 +60,13 @@ public class VehicleController {
         return ResponseEntity.status(HttpStatus.CREATED).body(toResponse);
     }
 
+    @DeleteMapping("/{vehicleId}")
+    public ResponseEntity<VehicleResponseDTO> deleteVehicles(
+            @PathVariable Long vehicleId
+    ){
+        VehicleResponseDTO vehicle = vehicleUseCase.deleteVehicle(vehicleId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(vehicle);
+
+    }
 }
