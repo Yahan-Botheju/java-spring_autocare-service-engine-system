@@ -83,7 +83,7 @@ public class VehicleUseCaseImpl implements  VehicleUseCase{
     public VehicleResponseDTO updateVehicle(Long vehicleId, Vehicle vehicle){
         //check vehicle availability
         if(vehicleRepository.findById(vehicleId).isEmpty()){
-            throw new ResourceNotFoundException("Vehicle with id not found" + " " + vehicleId);
+            throw new ResourceNotFoundException("Vehicle id not found" + " " + vehicleId);
         }
 
         //set to update method in repo for update values
@@ -98,6 +98,25 @@ public class VehicleUseCaseImpl implements  VehicleUseCase{
 
         // return response dto
         return turnToResponseDTO;
+    }
+
+
+    //delete vehicle
+    @Override
+    public VehicleResponseDTO deleteVehicle(Long vehicleId){
+
+        if(vehicleRepository.findById(vehicleId).isEmpty()){
+            throw new ResourceNotFoundException("Vehicle id not found" + " " + vehicleId);
+        }
+
+        Vehicle vehicle = vehicleRepository.deleteVehicle(vehicleId);
+
+        Customer customer = getCustomerDetails(vehicle.getCustomerId());
+
+        VehicleResponseDTO turnToResponseDTO = vehicleWebMapper.toResponseDTO(vehicle);
+                           turnToResponseDTO.setCustomerName(customer.getCustomerName());
+
+                           return turnToResponseDTO;
     }
 }
 
