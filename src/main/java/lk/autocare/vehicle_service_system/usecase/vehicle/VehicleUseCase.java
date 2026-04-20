@@ -15,4 +15,7 @@ public interface VehicleUseCase {
 
     //update vehicle details
     VehicleResponseDTO updateVehicle(Long vehicleId, Vehicle vehicle);
+
+    //delete vehicle
+    VehicleResponseDTO deleteVehicle(Long vehicleId);
 }

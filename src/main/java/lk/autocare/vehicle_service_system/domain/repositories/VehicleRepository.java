@@ -18,4 +18,7 @@ public interface VehicleRepository {
 
     //update vehicle details
     Vehicle updateVehicle(Long vehicleId, Vehicle vehicle);
+
+    //delete vehicle
+    Vehicle deleteVehicle(Long vehicleId);
 }

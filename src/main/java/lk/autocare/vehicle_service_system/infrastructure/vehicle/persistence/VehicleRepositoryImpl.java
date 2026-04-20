@@ -64,4 +64,18 @@ public class VehicleRepositoryImpl implements  VehicleRepository {
         //updated entity turn into domain model and return for response
         return vehiclePersistenceMapper.toDomainModel(updatedEntity);
     }
+
+    //delete vehicle
+    @Override
+    public Vehicle deleteVehicle(Long vehicleId){
+//         if(!jpaVehicleRepository.existsById(vehicleId)){
+//             throw new ResourceNotFoundException("Vehicle not found" + " "  + vehicleId);
+//         }
+
+        VehicleEntity vehicleEntity = jpaVehicleRepository.findById(vehicleId).orElseThrow(() -> new ResourceNotFoundException("Vehicle not found" + " "  + vehicleId));
+
+         jpaVehicleRepository.deleteById(vehicleId);
+
+         return vehiclePersistenceMapper.toDomainModel(vehicleEntity);
+    }
 }
