@@ -7,7 +7,6 @@ import lk.autocare.vehicle_service_system.web.customer.DTOs.CustomerResponseDTO;
 import lk.autocare.vehicle_service_system.web.vehicle.webMappers.VehicleWebMapper;
 import org.mapstruct.CollectionMappingStrategy;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring",
         uses = {VehicleWebMapper.class},

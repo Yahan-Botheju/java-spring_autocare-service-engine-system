@@ -14,11 +14,11 @@ public interface CustomerRepository {
     List<Customer> getAllCustomers();
 
     //save new customer
-    void saveCustomer(Customer customer);
+    Customer saveCustomer(Customer customer);
 
     //update customer
-    void updateCustomer(Long customerId, Customer customer);
+    Customer updateCustomer(Long customerId, Customer customer);
 
     //delete customer
-    void deleteCustomer(Long customerId);
+    Customer deleteCustomer(Long customerId);
 }

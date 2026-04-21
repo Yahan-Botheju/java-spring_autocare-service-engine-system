@@ -7,9 +7,8 @@ import lk.autocare.vehicle_service_system.infrastructure.vehicle.persistence.ent
 import lk.autocare.vehicle_service_system.infrastructure.vehicle.persistence.jpa.JpaVehicleRepository;
 import lk.autocare.vehicle_service_system.infrastructure.vehicle.persistence.mapper.VehiclePersistenceMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -68,14 +67,12 @@ public class VehicleRepositoryImpl implements  VehicleRepository {
     //delete vehicle
     @Override
     public Vehicle deleteVehicle(Long vehicleId){
-//         if(!jpaVehicleRepository.existsById(vehicleId)){
-//             throw new ResourceNotFoundException("Vehicle not found" + " "  + vehicleId);
-//         }
+        //check availability of vehicle
+        VehicleEntity vehicleEntity = jpaVehicleRepository.findById(vehicleId)
+                .orElseThrow(() -> new ResourceNotFoundException("Vehicle not found" + " "  + vehicleId));
+        //set to remove from db through domain repo
+        jpaVehicleRepository.deleteById(vehicleId);
 
-        VehicleEntity vehicleEntity = jpaVehicleRepository.findById(vehicleId).orElseThrow(() -> new ResourceNotFoundException("Vehicle not found" + " "  + vehicleId));
-
-         jpaVehicleRepository.deleteById(vehicleId);
-
-         return vehiclePersistenceMapper.toDomainModel(vehicleEntity);
+        return vehiclePersistenceMapper.toDomainModel(vehicleEntity);
     }
 }
