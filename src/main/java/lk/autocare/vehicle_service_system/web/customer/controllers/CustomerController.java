@@ -1,5 +1,6 @@
 package lk.autocare.vehicle_service_system.web.customer.controllers;
 
+import lk.autocare.vehicle_service_system.GlobalResponseHandler.StandardResponse;
 import lk.autocare.vehicle_service_system.domain.models.Customer;
 import lk.autocare.vehicle_service_system.usecase.customer.CustomerUseCase;
 import lk.autocare.vehicle_service_system.web.customer.DTOs.CustomerRequestDTO;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -25,48 +27,91 @@ public class CustomerController {
 
     //get all customers
     @GetMapping("/all")
-    public List<CustomerResponseDTO> getAllCustomers(){
+    public ResponseEntity<StandardResponse<List<CustomerResponseDTO>>> getAllCustomers(){
+        //get all customers as list from usecase
         List<Customer> customerList = customerUseCase.getAllCustomers();
-        
-        return customerList.stream().map(customer -> customerWebMapper.toResponseDTO(customer)).toList();
+
+        //turn all of them as response list
+        List<CustomerResponseDTO> responseDTOS = customerList.stream()
+                .map(customer -> customerWebMapper.toResponseDTO(customer)).toList();
+
+        //create standard response
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new StandardResponse<>(
+                        200,
+                        "Customers details fetched successful",
+                        LocalDateTime.now(),
+                        responseDTOS)
+        );
     }
 
     //save new customer
     @PostMapping("/register")
-    public ResponseEntity<String> saveCustomer(
+    public ResponseEntity<StandardResponse<CustomerResponseDTO>> saveCustomer(
             @RequestBody CustomerRequestDTO customerRequestDTO
     ){
         //turn requestDTO to domain model
         Customer toDomainModel = customerWebMapper.toDomainModel(customerRequestDTO);
-        //set model to usecase
-        customerUseCase.saveCustomer(toDomainModel);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body("Customer registered successfully");
+        //set model to usecase
+        Customer savedCustomer = customerUseCase.saveCustomer(toDomainModel);
+
+        //turn domain model to dto for response
+        CustomerResponseDTO responseDTO = customerWebMapper.toResponseDTO(savedCustomer);
+
+        //create custom response
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+              new StandardResponse<>(
+                      201,
+                      "Customer registered successful",
+                      LocalDateTime.now(),
+                      responseDTO)
+        );
     }
 
     //update customer
     @PutMapping("/{customerId}")
-    public ResponseEntity<String> updateCustomer(
+    public ResponseEntity<StandardResponse<CustomerResponseDTO>> updateCustomer(
             @PathVariable Long customerId,
             @RequestBody CustomerRequestDTO customerRequestDTO
     ){
-        //turn request dto to domain model
-        Customer toDomainModel = customerWebMapper.toDomainModel(customerRequestDTO);
+        //turn dto to domain model
+        Customer customer = customerWebMapper.toDomainModel(customerRequestDTO);
 
-        //set values to usecase
-       customerUseCase.updateCustomer(customerId, toDomainModel);
+        //set domain model to usecase
+        Customer toDomainModel = customerUseCase.updateCustomer(customerId,customer);
 
-       return ResponseEntity.status(HttpStatus.CREATED).body("Customer updated successfully");
+        //get that update domain model and turn to dto for response
+        CustomerResponseDTO response = customerWebMapper.toResponseDTO(toDomainModel);
+
+        //create custom response
+       return ResponseEntity.status(HttpStatus.OK).body(
+         new StandardResponse<>(
+                 200,
+                 "Customer updated successful",
+                 LocalDateTime.now(),
+                 response)
+       );
     }
 
     //delete customer
     @DeleteMapping("/{customerId}")
-    public ResponseEntity<String> deleteCustomer(
+    public ResponseEntity<StandardResponse<CustomerResponseDTO>> deleteCustomer(
             @PathVariable Long customerId
     ){
-        //directly set value to usecase
-        customerUseCase.deleteCustomer(customerId);
+        //set customer id to usecase
+        Customer customer = customerUseCase.deleteCustomer(customerId);
 
-        return ResponseEntity.status(HttpStatus.OK).body("Customer deleted successfully");
+        //turn customer into domain model
+        CustomerResponseDTO responseDTO = customerWebMapper.toResponseDTO(customer);
+
+        //create response
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new StandardResponse<>(
+                        200,
+                        "Customer deleted successful",
+                        LocalDateTime.now(),
+                        responseDTO)
+        );
     }
 }

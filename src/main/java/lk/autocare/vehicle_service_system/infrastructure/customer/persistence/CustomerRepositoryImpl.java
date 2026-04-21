@@ -1,11 +1,13 @@
 package lk.autocare.vehicle_service_system.infrastructure.customer.persistence;
 
 import lk.autocare.vehicle_service_system.domain.models.Customer;
+import lk.autocare.vehicle_service_system.domain.models.Vehicle;
 import lk.autocare.vehicle_service_system.domain.repositories.CustomerRepository;
 import lk.autocare.vehicle_service_system.infrastructure.customer.persistence.entity.CustomerEntity;
 import lk.autocare.vehicle_service_system.infrastructure.customer.persistence.jpa.JpaCustomerRepository;
 import lk.autocare.vehicle_service_system.infrastructure.customer.persistence.mapper.CustomerPersistenceMapper;
 import lk.autocare.vehicle_service_system.GlobalExceptionHandler.ResourceNotFoundException;
+import lk.autocare.vehicle_service_system.web.vehicle.DTOs.VehicleResponseDTO;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
@@ -30,16 +32,20 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
     //save new customer
     @Override
-    public void saveCustomer(Customer customer){
+    public Customer saveCustomer(Customer customer){
         //turn domain model to entity
         CustomerEntity entity = customerPersistenceMapper.toEntity(customer);
+
         //save in db
         jpaCustomerRepository.save(entity);
+
+        //return entity by turning into domain model
+        return customerPersistenceMapper.toDomainModel(entity);
     }
 
     //update customer
     @Override
-    public void updateCustomer(Long customerId, Customer customer){
+    public Customer updateCustomer(Long customerId, Customer customer){
         //check customer by id
         CustomerEntity currentEntity = jpaCustomerRepository.findById(customerId)
                 .orElseThrow(() -> new ResourceNotFoundException("Invalid Customer Id" + " " +customerId));
@@ -49,17 +55,23 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                .updateEntityWithNewDomainModel(customer, currentEntity);
        //save in db
        jpaCustomerRepository.save(updatedEntity);
+
+        //return updated data as domain model
+        return customerPersistenceMapper.toDomainModel(updatedEntity);
     }
 
     //delete customer
     @Override
-    public void deleteCustomer(Long customerId){
+    public Customer deleteCustomer(Long customerId){
         //check customer availability
-        if(!jpaCustomerRepository.existsById(customerId)){
-            throw new ResourceNotFoundException("Invalid customer id" + " " + customerId);
-        }
+        CustomerEntity customerEntity = jpaCustomerRepository.findById(customerId)
+                .orElseThrow(() -> new ResourceNotFoundException("Invalid Customer Id" + " " +customerId));
+
         //then delete customer
         jpaCustomerRepository.deleteById(customerId);
+
+        //turn taken customer data into domain mode then return
+        return customerPersistenceMapper.toDomainModel(customerEntity);
     }
 
     //find customer by id, turn into domain model
