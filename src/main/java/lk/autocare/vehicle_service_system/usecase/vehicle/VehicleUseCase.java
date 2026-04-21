@@ -1,6 +1,7 @@
 package lk.autocare.vehicle_service_system.usecase.vehicle;
 
 import lk.autocare.vehicle_service_system.domain.models.Vehicle;
+import lk.autocare.vehicle_service_system.domain.models.VehicleUpdateResult;
 import lk.autocare.vehicle_service_system.web.vehicle.DTOs.VehicleResponseDTO;
 
 import java.util.List;
@@ -8,14 +9,14 @@ import java.util.List;
 public interface VehicleUseCase {
 
     //get all vehicle
-    List<VehicleResponseDTO> getAllVehicles();
+    List<VehicleUpdateResult> getAllVehicles();
 
     //create vehicle
-    VehicleResponseDTO saveVehicle(Vehicle vehicle);
+    VehicleUpdateResult saveVehicle(Vehicle vehicle);
 
     //update vehicle details
-    VehicleResponseDTO updateVehicle(Long vehicleId, Vehicle vehicle);
+    VehicleUpdateResult updateVehicle(Long vehicleId, Vehicle vehicle);
 
     //delete vehicle
-    VehicleResponseDTO deleteVehicle(Long vehicleId);
+    VehicleUpdateResult deleteVehicle(Long vehicleId);
 }
