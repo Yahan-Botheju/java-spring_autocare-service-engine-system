@@ -1,6 +1,7 @@
 package lk.autocare.vehicle_service_system.web.vehicle.DTOs;
 
 import lk.autocare.vehicle_service_system.domain.models.VehicleFuelType;
+import lk.autocare.vehicle_service_system.domain.models.VehicleServiceStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,4 +21,5 @@ public class VehicleResponseDTO {
     private int mileage;
     private Long customerId;
     private String customerName;
+    private VehicleServiceStatus vehicleServiceStatus;
 }

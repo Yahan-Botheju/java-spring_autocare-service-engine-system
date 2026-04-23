@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lk.autocare.vehicle_service_system.domain.models.VehicleFuelType;
+import lk.autocare.vehicle_service_system.domain.models.VehicleServiceStatus;
 import lk.autocare.vehicle_service_system.infrastructure.customer.persistence.entity.CustomerEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,6 +36,9 @@ public class VehicleEntity {
 
     @Enumerated(EnumType.STRING)
     private VehicleFuelType vehicleFuelType;
+
+    @Enumerated(EnumType.STRING)
+    private VehicleServiceStatus vehicleServiceStatus;
 
     @ManyToOne
     @JoinColumn(name = "customerId", nullable = false)
