@@ -1,6 +1,7 @@
 package lk.autocare.vehicle_service_system.web.config;
 
-import lk.autocare.vehicle_service_system.web.customer.interceptor.CustomerRoleBaseInterceptor;
+import lk.autocare.vehicle_service_system.web.customer.interceptor.CustomerInterceptor;
+import lk.autocare.vehicle_service_system.web.vehicle.interceptor.VehicleInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -9,8 +10,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
 
-    //inject role base interceptor
-    private final CustomerRoleBaseInterceptor customerRoleBaseInterceptor;
+    //inject customer role base interceptor
+    private final CustomerInterceptor customerInterceptor;
+
+    //inject vehicle role base interceptor
+    private final VehicleInterceptor vehicleInterceptor;
 
 
 }
