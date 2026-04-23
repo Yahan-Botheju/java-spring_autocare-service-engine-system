@@ -3,6 +3,7 @@ package lk.autocare.vehicle_service_system.usecase.vehicle;
 import lk.autocare.vehicle_service_system.GlobalExceptionHandler.ResourceNotFoundException;
 import lk.autocare.vehicle_service_system.domain.models.Customer;
 import lk.autocare.vehicle_service_system.domain.models.Vehicle;
+import lk.autocare.vehicle_service_system.domain.models.VehicleServiceStatus;
 import lk.autocare.vehicle_service_system.domain.models.VehicleUpdateResult;
 import lk.autocare.vehicle_service_system.domain.repositories.CustomerRepository;
 import lk.autocare.vehicle_service_system.domain.repositories.VehicleRepository;
@@ -80,8 +81,12 @@ public class VehicleUseCaseImpl implements  VehicleUseCase{
     @Override
     public VehicleUpdateResult updateVehicle(Long vehicleId, Vehicle vehicle){
         //check vehicle availability
-        if(vehicleRepository.findById(vehicleId).isEmpty()){
-            throw new ResourceNotFoundException("Vehicle id not found" + " " + vehicleId);
+        Vehicle existingVehicle = vehicleRepository.findById(vehicleId)
+                .orElseThrow(() ->  new ResourceNotFoundException("Vehicle not found" + " " +  vehicleId));
+
+        //set service status complete vehicle, disable to update
+        if (existingVehicle.getVehicleServiceStatus() == VehicleServiceStatus.COMPLETED){
+            throw new ResourceNotFoundException("Vehicle service already completed, unable to edit vehicle details");
         }
 
         //set to update method in repo for update values
@@ -102,7 +107,12 @@ public class VehicleUseCaseImpl implements  VehicleUseCase{
     @Override
     public void deleteVehicle(Long vehicleId){
         //check vehicle availability by ID
-        vehicleRepository.findById(vehicleId).orElseThrow(() -> new ResourceNotFoundException("Vehicle id not found" + " " +  vehicleId));
+        Vehicle vehicle = vehicleRepository.findById(vehicleId).orElseThrow(() -> new ResourceNotFoundException("Vehicle id not found" + " " +  vehicleId));
+
+        //check vehicle service status is PENDING,then throw an error
+        if(vehicle.getVehicleServiceStatus() == VehicleServiceStatus.PENDING){
+            throw  new ResourceNotFoundException("Unable to delete vehicle service status is PENDING");
+        }
 
         //set id to domain repo to remove from db
         vehicleRepository.deleteVehicle(vehicleId);
