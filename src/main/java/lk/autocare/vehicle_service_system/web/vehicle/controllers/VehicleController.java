@@ -98,22 +98,12 @@ public class VehicleController {
 
     //delete vehicle
     @DeleteMapping("/{vehicleId}")
-    public ResponseEntity<StandardResponse<VehicleResponseDTO>> deleteVehicle(
+    public ResponseEntity<String> deleteVehicle(
             @PathVariable Long vehicleId
     ){
         //directly set id to usecase
-        VehicleUpdateResult deleteResult = vehicleUseCase.deleteVehicle(vehicleId);
+        vehicleUseCase.deleteVehicle(vehicleId);
 
-        //use mapper to create response
-        VehicleResponseDTO toResponse = vehicleWebMapper.customResponseDTO(deleteResult);
-
-       return ResponseEntity.status(HttpStatus.OK).body(
-                new StandardResponse<>(
-                        200,
-                        "Vehicle deleted successful",
-                        LocalDateTime.now(),
-                        toResponse
-                )
-       );
+       return ResponseEntity.status(HttpStatus.OK).body("Vehicle deleted successful");
     }
 }
