@@ -8,10 +8,10 @@ import lk.autocare.vehicle_service_system.web.vehicle.DTOs.VehicleRequestDTO;
 import lk.autocare.vehicle_service_system.web.vehicle.DTOs.VehicleResponseDTO;
 import lk.autocare.vehicle_service_system.web.vehicle.webMappers.VehicleWebMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -37,10 +37,10 @@ public class VehicleController {
                  .map(vehicleResult -> vehicleWebMapper.customResponseDTO(vehicleResult)).toList();
 
         //return response
-        return ResponseEntity.status(HttpStatus.OK).body(
+        return ResponseEntity.ok(
                  new StandardResponse<>(
                          200,
-                         "Details fetched",
+                         "Details fetched successfully",
                          LocalDateTime.now(),
                          responseDTOS)
         );
@@ -60,10 +60,10 @@ public class VehicleController {
         //use mapper for create response dto
         VehicleResponseDTO responseDTO = vehicleWebMapper.customResponseDTO(registerResult);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(
-                new StandardResponse<>(
+        return ResponseEntity.created(URI.create("/api/v1/autocare/vehicles/" + responseDTO.getVehicleId()))
+                .body(new StandardResponse<>(
                         201,
-                        "Vehicle registered successful",
+                        "Vehicle registered successfully",
                         LocalDateTime.now(),
                         responseDTO)
         );
@@ -86,7 +86,7 @@ public class VehicleController {
         VehicleResponseDTO toResponse = vehicleWebMapper.customResponseDTO(result);
 
         //return response with updated values
-        return ResponseEntity.status(HttpStatus.OK).body(
+        return ResponseEntity.ok(
                 new StandardResponse<>(
                         200,
                         "Vehicle updated successful",
@@ -104,6 +104,6 @@ public class VehicleController {
         //directly set id to usecase
         vehicleUseCase.deleteVehicle(vehicleId);
 
-       return ResponseEntity.status(HttpStatus.OK).body("Vehicle deleted successful");
+       return ResponseEntity.noContent().build();
     }
 }
