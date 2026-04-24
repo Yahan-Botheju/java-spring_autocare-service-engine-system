@@ -46,6 +46,24 @@ public class GlobalExceptionHandler {
         errorMessage.setStatus(500);
         errorMessage.setMessage(ex.getMessage());
         errorMessage.setDescription(request.getDescription(false));
+
         return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    //409 error handler
+    @ExceptionHandler(ServiceAlreadyCompletedException.class)
+    public ResponseEntity<ErrorMessage> conflictException(
+            ServiceAlreadyCompletedException ex,
+            WebRequest request
+    ){
+        log.error("Internal server error", ex);
+
+        ErrorMessage  errorMessage = new ErrorMessage();
+        errorMessage.setTimestamp(LocalDateTime.now());
+        errorMessage.setStatus(409);
+        errorMessage.setMessage(ex.getMessage());
+        errorMessage.setDescription(request.getDescription(false));
+
+        return new ResponseEntity<>(errorMessage, HttpStatus.CONFLICT);
     }
 }
