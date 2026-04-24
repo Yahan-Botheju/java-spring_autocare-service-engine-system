@@ -2,6 +2,7 @@ node_modules
 HELP.md
 .gradle
 build/
+src/main/frontend
 src/main/resources/application.properties
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
@@ -37,3 +38,9 @@ out/
 
 ### VS Code ###
 .vscode/
+
+# .gitignore file එකට මේවා එකතු කරන්න
+*.hprof
+*.log
+.idea/
+target/
