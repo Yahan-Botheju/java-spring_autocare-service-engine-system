@@ -61,13 +61,13 @@ public class VehicleUseCaseImpl implements  VehicleUseCase{
         vehicleRepository.findById(vehicle.getCustomerId())
                 .orElseThrow(() -> new ResourceNotFoundException("Customer not found" + " " +  vehicle.getCustomerId()));
 
-        //call default service status set method (DOMAIN MODEL)
+        //call default service status set method (DOMAIN MODEL METHOD)
         vehicle.setDefaultVehicleServiceStatus();
 
         //save vehicle details through domain repo
         Vehicle savedVehicle = vehicleRepository.saveVehicle(vehicle);
 
-        //use helper method (DOMAIN MODEL)
+        //use helper method (DOMAIN MODEL METHOD)
         vehicle.updateNextServiceDate();
 
         //get related customer id for saved vehicle(req)
@@ -107,12 +107,11 @@ public class VehicleUseCaseImpl implements  VehicleUseCase{
     @Override
     public void deleteVehicle(Long vehicleId){
         //check vehicle availability by ID
-        Vehicle vehicle = vehicleRepository.findById(vehicleId).orElseThrow(() -> new ResourceNotFoundException("Vehicle id not found" + " " +  vehicleId));
+        Vehicle vehicle = vehicleRepository.findById(vehicleId)
+                .orElseThrow(() -> new ResourceNotFoundException("Vehicle id not found" + " " +  vehicleId));
 
-        //check vehicle service status is PENDING,then throw an error
-        if(vehicle.getVehicleServiceStatus() == VehicleServiceStatus.PENDING){
-            throw  new ResourceNotFoundException("Unable to delete vehicle service status is PENDING");
-        }
+        //use helper method (DOMAIN MODEL METHOD)
+        vehicle.disableVehicleUpdate();
 
         //set id to domain repo to remove from db
         vehicleRepository.deleteVehicle(vehicleId);
