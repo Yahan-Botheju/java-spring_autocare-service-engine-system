@@ -39,10 +39,10 @@ public class VehicleUseCaseImpl implements  VehicleUseCase{
 
     //get all vehicle
     @Override
-    public List<VehicleUpdateResult> getAllVehicles(){
+    public List<VehicleUpdateResult> getAllVehicles(int page, int size){
 
         //get all vehicles
-        List<Vehicle> vehicles = vehicleRepository.getAllVehicles();
+        List<Vehicle> vehicles = vehicleRepository.getAllVehicles(page, size);
 
         //return them assigning customer model and vehicle model
         return vehicles.stream().map(vehicle -> {

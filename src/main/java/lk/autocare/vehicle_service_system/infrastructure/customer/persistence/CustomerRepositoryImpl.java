@@ -7,6 +7,8 @@ import lk.autocare.vehicle_service_system.infrastructure.customer.persistence.jp
 import lk.autocare.vehicle_service_system.infrastructure.customer.persistence.mapper.CustomerPersistenceMapper;
 import lk.autocare.vehicle_service_system.GlobalExceptionHandler.ResourceNotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,9 +24,14 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
     //get all customers
     @Override
-    public List<Customer> getAllCustomers(){
-        //get all from db, through mapper turn into domain model
-        return jpaCustomerRepository.findAll().stream()
+    public List<Customer> getAllCustomers(int page, int size){
+
+        //get all customers
+        Page<CustomerEntity> customerEntityPage = jpaCustomerRepository
+                .findAll(PageRequest.of(page,size));
+
+        //get all from db, through mapper turn into domain model as pages
+        return customerEntityPage.stream()
                 .map(customerPersistenceMapper::toDomainModel).toList();
     }
 

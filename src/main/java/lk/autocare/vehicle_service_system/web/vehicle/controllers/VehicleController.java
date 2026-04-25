@@ -28,9 +28,12 @@ public class VehicleController {
 
     //get all vehicles
     @GetMapping("/all")
-    public ResponseEntity<StandardResponse<List<VehicleResponseDTO>>> allVehicles() {
+    public ResponseEntity<StandardResponse<List<VehicleResponseDTO>>> allVehicles(
+            @RequestParam(defaultValue = "0")int page,
+            @RequestParam(defaultValue = "10")int size
+    ) {
         //get all vehicles
-        List<VehicleUpdateResult> vehiclesResults = vehicleUseCase.getAllVehicles();
+        List<VehicleUpdateResult> vehiclesResults = vehicleUseCase.getAllVehicles(page, size);
 
         //turn to list
         List<VehicleResponseDTO> responseDTOS = vehiclesResults.stream()

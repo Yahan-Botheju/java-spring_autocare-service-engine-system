@@ -11,7 +11,7 @@ public interface CustomerRepository {
     Optional<Customer> findById(Long customerId);
 
     //get all customers
-    List<Customer> getAllCustomers();
+    List<Customer> getAllCustomers(int page, int size);
 
     //save new customer
     Customer saveCustomer(Customer customer);

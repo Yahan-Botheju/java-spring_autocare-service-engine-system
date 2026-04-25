@@ -15,8 +15,8 @@ public class CustomerUseCaseImpl implements  CustomerUseCase {
 
     //get all customers
     @Override
-    public List<Customer> getAllCustomers(){
-        return customerRepository.getAllCustomers();
+    public List<Customer> getAllCustomers(int page, int size) {
+        return customerRepository.getAllCustomers(page, size);
     }
 
     //save new customer
@@ -39,7 +39,7 @@ public class CustomerUseCaseImpl implements  CustomerUseCase {
 
     //delete customer
     @Override
-    public Customer deleteCustomer(Long customerId){
+    public void deleteCustomer(Long customerId){
 
         //check customer availability then throw error to exception handler
         if(customerRepository.findById(customerId).isEmpty()){
@@ -47,6 +47,6 @@ public class CustomerUseCaseImpl implements  CustomerUseCase {
         }
 
         //set customer to domain repo to delete
-       return customerRepository.deleteCustomer(customerId);
+       customerRepository.deleteCustomer(customerId);
     }
 }

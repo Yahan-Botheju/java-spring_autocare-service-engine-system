@@ -11,7 +11,7 @@ public interface VehicleRepository {
     Optional<Vehicle> findById(Long vehicleId);
 
     //get all vehicle
-    List<Vehicle> getAllVehicles();
+    List<Vehicle> getAllVehicles(int page, int size);
 
     //create vehicle
     Vehicle saveVehicle(Vehicle vehicle);

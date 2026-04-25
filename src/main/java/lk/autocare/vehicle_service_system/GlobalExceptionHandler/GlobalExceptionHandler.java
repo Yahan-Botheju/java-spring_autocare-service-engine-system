@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
+import java.nio.file.AccessDeniedException;
 import java.time.LocalDateTime;
 
 @RestControllerAdvice
@@ -65,5 +66,22 @@ public class GlobalExceptionHandler {
         errorMessage.setDescription(request.getDescription(false));
 
         return new ResponseEntity<>(errorMessage, HttpStatus.CONFLICT);
+    }
+
+    //403 error handler
+    @ExceptionHandler(ForbiddenAccessException.class)
+    public ResponseEntity<ErrorMessage> forbiddenAccessException(
+            ForbiddenAccessException ex,
+            WebRequest request
+    ){
+        log.error("Internal server error", ex);
+
+        ErrorMessage  errorMessage = new ErrorMessage();
+        errorMessage.setTimestamp(LocalDateTime.now());
+        errorMessage.setStatus(403);
+        errorMessage.setMessage(ex.getMessage());
+        errorMessage.setDescription(request.getDescription(false));
+
+        return new ResponseEntity<>(errorMessage, HttpStatus.FORBIDDEN);
     }
 }

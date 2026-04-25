@@ -7,7 +7,7 @@ import java.util.List;
 public interface CustomerUseCase {
 
     //get all customers
-    List<Customer> getAllCustomers();
+    List<Customer> getAllCustomers(int page, int size);
 
     //save new customer
     Customer saveCustomer(Customer customer);
@@ -16,5 +16,5 @@ public interface CustomerUseCase {
     Customer updateCustomer(Long customerId, Customer customer);
 
     //delete customer
-    Customer deleteCustomer(Long customerId);
+    void deleteCustomer(Long customerId);
 }

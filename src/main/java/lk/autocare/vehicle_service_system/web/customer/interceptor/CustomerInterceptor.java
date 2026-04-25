@@ -22,28 +22,21 @@ public class CustomerInterceptor implements HandlerInterceptor {
 
         //only admin can view all the vehicles
         if("GET".equalsIgnoreCase(requestMethod) && uri.startsWith("/api/v1/autocare/customers/all")) {
-            if(role == null || !role.trim().equalsIgnoreCase("ADMIN")){
-                response.sendError(HttpServletResponse.SC_FORBIDDEN);
-                response.setContentType("application/json");
-                response.setCharacterEncoding("UTF-8");
-                response.getWriter().write("Only ADMIN can view all the customers..!!");
-
-                return false;
-            }
+             checkAdminRole(role);
         }
 
         //only admin can delete customer
         if("DELETE".equalsIgnoreCase(requestMethod) && uri.startsWith("/api/v1/autocare/customers/")) {
-            if(role == null || !role.trim().equalsIgnoreCase("ADMIN")){
-                response.sendError(HttpServletResponse.SC_FORBIDDEN);
-                response.setContentType("application/json");
-                response.setCharacterEncoding("UTF-8");
-                response.getWriter().write("Only ADMIN can delete customer..!!");
-
-                return false;
-            }
+           checkAdminRole(role);
         }
 
         return true;
+    }
+
+    //create common ADMIN check method
+    private void checkAdminRole(String role){
+        if(role == null || !role.trim().equalsIgnoreCase("ADMIN")){
+            throw new org.springframework.security.access.AccessDeniedException("Access Denied: ADMIN authorization required..!!");
+        }
     }
 }
