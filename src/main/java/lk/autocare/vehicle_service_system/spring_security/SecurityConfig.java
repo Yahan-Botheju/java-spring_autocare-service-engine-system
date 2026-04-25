@@ -1,4 +1,4 @@
-package lk.autocare.vehicle_service_system.security;
+package lk.autocare.vehicle_service_system.spring_security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
