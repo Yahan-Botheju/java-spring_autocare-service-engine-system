@@ -29,13 +29,16 @@ public class CustomerController {
 
     //get all customers
     @GetMapping("/all")
-    public ResponseEntity<StandardResponse<List<CustomerResponseDTO>>> getAllCustomers(){
+    public ResponseEntity<StandardResponse<List<CustomerResponseDTO>>> getAllCustomers(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10")int size
+    ){
 
         //add logger
         log.info("Request received for all customers");
 
         //get all customers as list from usecase
-        List<Customer> customerList = customerUseCase.getAllCustomers();
+        List<Customer> customerList = customerUseCase.getAllCustomers(page, size);
 
         //turn all of them as response list
         List<CustomerResponseDTO> responseDTOS = customerList.stream()
