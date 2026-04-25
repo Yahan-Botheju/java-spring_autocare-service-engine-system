@@ -7,6 +7,8 @@ import lk.autocare.vehicle_service_system.infrastructure.vehicle.persistence.ent
 import lk.autocare.vehicle_service_system.infrastructure.vehicle.persistence.jpa.JpaVehicleRepository;
 import lk.autocare.vehicle_service_system.infrastructure.vehicle.persistence.mapper.VehiclePersistenceMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 
 import java.util.List;
@@ -30,9 +32,12 @@ public class VehicleRepositoryImpl implements  VehicleRepository {
 
     //get all vehicle
     @Override
-    public List<Vehicle> getAllVehicles(){
+    public List<Vehicle> getAllVehicles(int page, int size){
+        //get all vehicle
+        Page<VehicleEntity> vehicleEntityPage  = jpaVehicleRepository.findAll(PageRequest.of(page, size));
+
         //find all vehicles from db then attached to list and return
-        return jpaVehicleRepository.findAll().stream()
+        return vehicleEntityPage.stream()
                 .map(vehicle -> vehiclePersistenceMapper.toDomainModel(vehicle)).toList();
     }
 
