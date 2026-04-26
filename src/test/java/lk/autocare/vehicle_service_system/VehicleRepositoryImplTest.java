@@ -1,5 +1,6 @@
 package lk.autocare.vehicle_service_system;
 
+import lk.autocare.vehicle_service_system.GlobalExceptionHandler.ResourceNotFoundException;
 import lk.autocare.vehicle_service_system.domain.models.Vehicle;
 import lk.autocare.vehicle_service_system.infrastructure.vehicle.persistence.VehicleRepositoryImpl;
 import lk.autocare.vehicle_service_system.infrastructure.vehicle.persistence.entity.VehicleEntity;
@@ -82,6 +83,44 @@ public class VehicleRepositoryImplTest {
 
         //check new record has created
         verify(jpaVehicleRepository,times(1)).save(dummyVehicleEntity);
+    }
+
+    @Test
+    void shouldThrowResourceNotFoundException(){
+        Long vehicleId = 1L;
+        VehicleEntity dummyVehicleEntity = new VehicleEntity();
+        Vehicle dummyVehicleDomain = new Vehicle();
+
+        when(jpaVehicleRepository.findById(vehicleId)).thenReturn(Optional.of(dummyVehicleEntity));
+
+        assertThrows(ResourceNotFoundException.class,()->{
+            vehicleRepositoryImpl.updateVehicle(vehicleId, dummyVehicleDomain);
+        });
+    }
+
+    @Test
+    void shouldUpdateVehicle(){
+        Long vehicleId = 1L;
+        Vehicle newDomainData = new Vehicle();
+        Vehicle updatedDomain = new Vehicle();
+        VehicleEntity existingEntity = new VehicleEntity();
+        VehicleEntity updatedEntity = new VehicleEntity();
+
+        when(jpaVehicleRepository.findById(vehicleId))
+                .thenReturn(Optional.of(existingEntity));
+
+        when(vehiclePersistenceMapper.oldEntityDataToNewEntity(newDomainData, existingEntity))
+                .thenReturn(updatedEntity);
+
+        when(jpaVehicleRepository.save(updatedEntity))
+                .thenReturn(updatedEntity);
+
+        when(vehiclePersistenceMapper.toDomainModel(updatedEntity))
+                .thenReturn(updatedDomain);
+        Vehicle result = vehicleRepositoryImpl.updateVehicle(vehicleId, newDomainData);
+
+        assertEquals(updatedDomain, result);
+        verify(jpaVehicleRepository,times(1)).save(updatedEntity);
     }
 }
 
