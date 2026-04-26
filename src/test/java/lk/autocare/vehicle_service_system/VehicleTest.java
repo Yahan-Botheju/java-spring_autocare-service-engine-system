@@ -41,6 +41,17 @@ public class VehicleTest {
         assertEquals(VehicleServiceStatus.PENDING, vehicle.getVehicleServiceStatus());
     }
 
+    //negative case
+    @Test
+    public void setDefaultVehicleStatusNegative(){
+        Vehicle vehicle = new Vehicle();
+
+        vehicle.setVehicleServiceStatus(VehicleServiceStatus.COMPLETED);
+
+        vehicle.setDefaultVehicleServiceStatus();
+
+        assertEquals(VehicleServiceStatus.COMPLETED, vehicle.getVehicleServiceStatus());
+    }
 
     @Test
     public void shouldCalculateNextServiceDateCorrectly(){
