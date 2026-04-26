@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-public class VehicleTest {
+public class VehicleDomainTest {
 
     @Test
     public void shouldThrowExceptionWhenServiceIsCompleted(){
