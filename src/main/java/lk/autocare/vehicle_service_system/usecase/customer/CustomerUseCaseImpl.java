@@ -1,6 +1,8 @@
 package lk.autocare.vehicle_service_system.usecase.customer;
 
 import lk.autocare.vehicle_service_system.domain.models.Customer;
+import lk.autocare.vehicle_service_system.domain.models.Vehicle;
+import lk.autocare.vehicle_service_system.domain.models.VehicleUpdateResult;
 import lk.autocare.vehicle_service_system.domain.repositories.CustomerRepository;
 import lk.autocare.vehicle_service_system.GlobalExceptionHandler.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +18,14 @@ public class CustomerUseCaseImpl implements  CustomerUseCase {
     //get all customers
     @Override
     public List<Customer> getAllCustomers(int page, int size) {
-        return customerRepository.getAllCustomers(page, size);
+        //get all customers
+        List<Customer> customers = customerRepository.getAllCustomers(page, size);
+
+        return customers.stream().map(customer -> {
+            customer.getVehicles().forEach(Vehicle::updateNextServiceDate);
+            return customer;
+        }).toList();
+
     }
 
     //save new customer
