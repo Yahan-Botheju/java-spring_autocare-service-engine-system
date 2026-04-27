@@ -351,7 +351,7 @@ Fields:
 ````
 # 📂 Project Structure
 
-```text
+
 └── 📁 vehicle_service_system
     ├── 📁 domain                                       @Core Business Logic & Enterprise Rules
     │   ├── 📁 models                                   @Pure Domain Entities (No Framework Logic)
