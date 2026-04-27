@@ -349,40 +349,91 @@ Fields:
 # 📂 Project Structure
 
 ````
-src/main/java/lk/autocare/vehicle_service_system
-├── 📁 domain
-│   ├── 📁 models
-│   │   ├── Customer.java
-│   │   ├── Vehicle.java
-│   │   └── VehicleServiceStatus.java
-│   └── 📁 repositories
-│       ├── CustomerRepository.java
-│       └── VehicleRepository.java
-├── 📁 usecase
-│   ├── 📁 customer
-│   │   ├── CustomerUseCase.java
-│   │   └── CustomerUseCaseImpl.java
-│   └── 📁 vehicle
-│       ├── VehicleUseCase.java
-│       └── VehicleUseCaseImpl.java
-├── 📁 infrastructure
-│   ├── 📁 customer
-│   │   ├── 📁 persistence
-│   │   │   ├── 📁 entity (CustomerEntity.java)
-│   │   │   └── CustomerRepositoryImpl.java
-│   │   └── 📁 config
-│   └── 📁 vehicle
-├── 📁 web
-│   ├── 📁 customer
-│   │   ├── 📁 controllers (CustomerController.java)
-│   │   └── 📁 DTOs
-│   └── 📁 vehicle
-├── 📁 GlobalExceptionHandler
-│   └── GlobalExceptionHandler.java
-├── 📁 GlobalResponseHandler
-│   └── StandardResponse.java
-└── 📁 spring_security
-    └── SecurityConfig.java
+# 📂 Project Structure
+
+```text
+└── 📁 vehicle_service_system
+    ├── 📁 domain                                       @Core Business Logic & Enterprise Rules
+    │   ├── 📁 models                                   @Pure Domain Entities (No Framework Logic)
+    │   │   ├── Customer.java
+    │   │   ├── Vehicle.java
+    │   │   ├── VehicleFuelType.java
+    │   │   ├── VehicleServiceStatus.java
+    │   │   └── VehicleUpdateResult.java
+    │   └── 📁 repositories                             @Domain Repository Interfaces (Outbound Ports)
+    │       ├── CustomerRepository.java
+    │       └── VehicleRepository.java
+    │
+    ├── 📁 usecase                                      @Application Specific Business Rules
+    │   ├── 📁 customer
+    │   │   ├── CustomerUseCase.java                    @Inbound Port
+    │   │   └── CustomerUseCaseImpl.java                @Business Logic Implementation
+    │   └── 📁 vehicle
+    │       ├── VehicleUseCase.java
+    │       └── VehicleUseCaseImpl.java
+    │
+    ├── 📁 infrastructure                               @External Frameworks & Tools (Persistence)
+    │   ├── 📁 customer
+    │   │   ├── 📁 config                               @Dependency Injection Configurations
+    │   │   │   ├── CustomerBeanConfig.java
+    │   │   │   └── CustomerPersistenceBeanConfig.java
+    │   │   └── 📁 persistence
+    │   │       ├── 📁 entity                           @Database Entities (JPA)
+    │   │       │   └── CustomerEntity.java
+    │   │       ├── 📁 jpa                              @Spring Data Repositories
+    │   │       │   └── JpaCustomerRepository.java
+    │   │       ├── 📁 mapper                           @Persistence Mapping (Domain <-> Entity)
+    │   │       │   └── CustomerPersistenceMapper.java
+    │   │       └── CustomerRepositoryImpl.java         @Persistence Adapter
+    │   └── 📁 vehicle
+    │       ├── 📁 config
+    │       │   ├── VehicleBeanConfig.java
+    │       │   └── VehiclePersistenceBeanConfig.java
+    │       └── 📁 persistence
+    │           ├── 📁 entity
+    │           │   └── VehicleEntity.java
+    │           ├── 📁 jpa
+    │           │   └── JpaVehicleRepository.java
+    │           ├── 📁 mapper
+    │           │   └── VehiclePersistenceMapper.java
+    │           └── VehicleRepositoryImpl.java
+    │
+    ├── 📁 web                                          @Entry Points & Delivery (UI/API)
+    │   ├── 📁 config                                   @Web MVC Configurations
+    │   │   └── WebConfig.java
+    │   ├── 📁 customer
+    │   │   ├── 📁 controllers                          @REST API Controllers
+    │   │   │   └── CustomerController.java
+    │   │   ├── 📁 DTOs                                 @Request/Response Data Objects
+    │   │   │   ├── CustomerRequestDTO.java
+    │   │   │   └── CustomerResponseDTO.java
+    │   │   ├── 📁 interceptor                          @Request Pre-processing
+    │   │   │   └── CustomerInterceptor.java
+    │   │   └── 📁 webMappers                           @Web Mapping (DTO <-> Domain)
+    │   │       └── CustomerWebMapper.java
+    │   └── 📁 vehicle
+    │       ├── 📁 controllers
+    │       ├── 📁 DTOs
+    │       │   ├── VehicleRequestDTO.java
+    │       │   ├── VehicleResponseDTO.java
+    │       │   └── VehicleShortInfoDTO.java
+    │       ├── 📁 interceptor
+    │       └── 📁 webMappers
+    │
+    ├── 📁 GlobalExceptionHandler                       @Centralized Exception Management
+    │   ├── ErrorMessage.java
+    │   ├── ForbiddenAccessException.java
+    │   ├── GlobalExceptionHandler.java
+    │   ├── ResourceNotFoundException.java
+    │   └── ServiceAlreadyCompletedException.java
+    │
+    ├── 📁 GlobalResponseHandler                        @Generic Response Wrapping
+    │   └── StandardResponse.java
+    │
+    ├── 📁 spring_security                              @Security & Access Control
+    │   └── SecurityConfig.java
+    │
+    └── VehicleServiceSystemApplication.java            @Spring Boot Bootstrap Class
 
 `````
 
