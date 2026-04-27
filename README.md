@@ -566,6 +566,8 @@ This project was built to practice:
  - DTO & mapping strategies
  - Business rule implementation
  - API design best practices
+ - Rich Domain Models
+ - Standered Error Response
 ---
 
 # 📌 Note
