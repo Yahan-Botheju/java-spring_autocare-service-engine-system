@@ -493,7 +493,53 @@ http://localhost:5000/v3/api-docs
 
 ---
 
-# 📥 Sample Request
+# 👤 Customer API Example
+
+### 📥 Sample Request
+
+```json
+{
+  "customerName": "James Smith",
+  "customerPhone": "555-0101",
+  "customerEmail": "james.smith@example.com"
+}
+
+````
+---
+### 📤 Sample Response
+
+```json id="r2k8v3"
+{
+  "statusCode": 200,
+  "message": "Customers details fetched successfully",
+  "timestamp": "2026-04-27T19:05:11.8739514",
+  "data": [
+    {
+      "customerId": 1,
+      "customerName": "James Smith",
+      "customerPhone": "555-0101",
+      "customerEmail": "james.smith@example.com",
+      "vehicles": [
+        {
+          "vehicleId": 1,
+          "vehicleNumber": "NY-7829-K",
+          "vehicleModel": "Ford F-150",
+          "lastServiceDate": "2024-01-15",
+          "nextServiceDate": "2024-07-15",
+          "mileage": 15000
+        }
+      ]
+    }
+  ]
+}
+```
+---
+
+# 🚗 Vehicle API Example
+
+ 
+
+### 📥 Sample  Request
 
 ```json
 {
@@ -507,20 +553,27 @@ http://localhost:5000/v3/api-docs
 
 ````
 ---
-# 📤 Sample Response
+### 📤 Sample Response
 
 ```json id="r2k8v3"
 {
-  "vehicleId": 1,
-  "vehicleNumber": "CAB-1234",
-  "vehicleModel": "Toyota Prius",
-  "vehicleFuelType": "HYBRID",
-  "lastServiceDate": "2025-01-01",
-  "nextServiceDate": "2025-07-01",
-  "mileage": 50000,
-  "customerId": 1,
-  "customerName": "John Doe",
-  "vehicleServiceStatus": "PENDING"
+  "statusCode": 200,
+  "message": "Details fetched successfully",
+  "timestamp": "2026-04-27T19:16:15.648869",
+  "data": [
+    {
+      "vehicleId": 1,
+      "vehicleNumber": "NY-7829-K",
+      "vehicleModel": "Ford F-150",
+      "vehicleFuelType": "PETROL",
+      "lastServiceDate": "2024-01-15",
+      "nextServiceDate": "2024-07-15",
+      "mileage": 15000,
+      "customerId": 1,
+      "customerName": "James Smith",
+      "vehicleServiceStatus": "COMPLETED"
+    }
+  ]
 }
 ```
 ---
