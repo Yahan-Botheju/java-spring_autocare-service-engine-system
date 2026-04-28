@@ -98,11 +98,13 @@ This allows:
 
 ---
 
-### 🏗️ Bean Wiring Example
+ ## 🏗️ Bean Wiring Example
 
-#### 👤 Customer Module
 ---
-#####customer usecase bean config
+
+ ### 👤 Customer Module
+
+* customer usecase bean config
 
 ```java
 @Configuration
@@ -114,9 +116,8 @@ class CustomerBeanConfig {
     }
 }
 ````
----
-#####customer persistence bean config
----
+* customer persistence bean config
+
 ```java
 @Configuration
 class CustomerPersistenceBeanConfig {
@@ -131,10 +132,10 @@ class CustomerPersistenceBeanConfig {
 }
 ```
 ---
-#### 🚗 Vehicle Module
----
-#####vehicle usecase bean config
----
+### 🚗 Vehicle Module
+
+* vehicle usecase bean config
+
 ```java
 @Configuration
 class VehicleBeanConfig {
@@ -147,9 +148,8 @@ class VehicleBeanConfig {
     }
 }
 ```
----
-#####vehicle persistence bean config
----
+* vehicle persistence bean config
+
 ```java
 @Configuration
 class VehiclePersistenceBeanConfig {
